@@ -13,6 +13,7 @@ src/main/java/TxtDB/dblList.txt
 *.iws
 *.iml
 *.ipr
+src/main/java/treinosSala
 
 ### Eclipse ###
 .apt_generated
