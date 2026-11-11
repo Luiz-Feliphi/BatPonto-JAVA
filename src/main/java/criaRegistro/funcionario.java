@@ -13,7 +13,29 @@ public class funcionario {
     private String Nome;
     private String Nascimento;
     private String Cargo;
-    private String root = "src/main/java/TxtDB/dblList.txt";
+    private String root = PathRoot("src/main/java/TxtDB/dblList.txt");
+    private String PathRoot(String rootPath) {
+        try {
+            Path path = Path.of(rootPath);
+            Path pasta = path.getParent();
+            //cria a pasta TxtDB caso ela não exista
+            if (pasta != null && !Files.exists(pasta)) {
+                Files.createDirectories(pasta);
+                System.out.println("Pasta"+pasta+" criada com sucesso: ");
+            }
+            //cria o arquivo dbList.txt caso ele não exista
+            if (!Files.exists(path)) {
+                Files.createFile(path);
+                System.out.println("Arquivo "+path.getFileName()+" criado com sucesso: ");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Erro crítico ao tentar criar a estrutura de arquivos", e);
+        }
+
+        return rootPath;
+    }
 
     /*METODOS PRIVADOS DA CLASSE FUNCIONARIO*/
 
