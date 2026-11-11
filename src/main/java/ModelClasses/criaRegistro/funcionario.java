@@ -1,4 +1,4 @@
-package criaRegistro;
+package ModelClasses.criaRegistro;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
 public class funcionario {
     private int id_unico;
@@ -36,9 +37,7 @@ public class funcionario {
 
         return rootPath;
     }
-
     /*METODOS PRIVADOS DA CLASSE FUNCIONARIO*/
-
     // Pega o texto entre o primeiro par do marcador
     private String PegarEntre(String linha, char marcador) {
         int inicio = linha.indexOf(marcador);
@@ -49,7 +48,6 @@ public class funcionario {
             return "";
         return linha.substring(inicio + 1, fim);
     }
-
     // Tira os marcadores do texto
     private String Limpar(String texto) {
         String limpo = "";
@@ -63,7 +61,6 @@ public class funcionario {
             throw new IllegalArgumentException("Campo vazio");
         return limpo;
     }
-
     // 000.000.000-69 -> 00000000069
     private String GetOrganizerCPF(String CPF) {
         String CPFLimpo = "";
@@ -73,12 +70,10 @@ public class funcionario {
         }
         return CPFLimpo;
     }
-
     // 00000000069 -> 000.000.000-69
     private String GetFormatCPF(String CPF) {
         return CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "." + CPF.substring(6, 9) + "-" + CPF.substring(9);
     }
-
     // 04112026 -> 04/11/2026
     private String GetOrganizerNascimento(String Nascimento) {
         String limpo = Nascimento.replace("/", "");
@@ -86,14 +81,16 @@ public class funcionario {
             throw new IllegalArgumentException("Nascimento invalido");
         return limpo.substring(0, 2) + "/" + limpo.substring(2, 4) + "/" + limpo.substring(4);
     }
-
     private String GetOrganizerName(String nome) {
         return nome.trim().toLowerCase();
     }
-
     // Maior id do .txt + 1
     private int GetNextId() throws IOException {
-        int maior = 0;
+        int min=1000;
+        int max=9999;
+        Random randomNum = new Random();
+        int maior = randomNum.nextInt(max)+min;
+                //GetIDNonDupe(min,max);
         Path DBpath = Path.of(root);
         if (!Files.exists(DBpath))
             return 1;
@@ -106,8 +103,19 @@ public class funcionario {
         return maior + 1;
     }
 
-    /*METODOS PUBLICOS DA CLASSE FUNCIONARIO*/
+//    private int GetIDNonDupe(int min, int max) {
+//        Random randomNum = new Random();
+//        int NewRandomNumID= randomNum.nextInt(min - max+1)+min;
+//        Path DBpath = Path.of(root);
+//        if (!Files.exists(DBpath))
+//            return 0;
+//        do(){
+//            //
+//        }while();
+//        return id;
+//    }
 
+    /*METODOS PUBLICOS DA CLASSE FUNCIONARIO*/
     /*
      * Exemplo-IN: 05/11/1999
      * Exemplo-OUT: 27
@@ -124,7 +132,6 @@ public class funcionario {
             idade--;
         return idade;
     }
-
     // Procura pelo CPF e devolve o nome
     public String getNome(String CPFFuncionario) throws IOException {
         String CPFTratado = GetOrganizerCPF(CPFFuncionario);

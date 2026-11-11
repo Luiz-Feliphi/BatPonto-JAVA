@@ -1,4 +1,4 @@
-package criaRegistro;
+package ModelClasses.criaRegistro;
 
 public class local {
     private int id_unico;
