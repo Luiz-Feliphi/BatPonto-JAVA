@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
-public class funcionario {
+public class Funcionario {
     private int id_unico;
     private String CPF;
     private String Nome;
