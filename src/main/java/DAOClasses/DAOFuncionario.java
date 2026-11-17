@@ -1,5 +1,7 @@
 package DAOClasses;
 
+import java.io.FileWriter;
+
 public class DAOFuncionario {
     /*
         Até onde eu entendi
@@ -7,7 +9,13 @@ public class DAOFuncionario {
         o DAO puxa outras classes usadas para salvar que será as classes de processamento
         exemplo
         DAOFunncionario
+        DAO é crud
         public 
     */
-   public boolean salvar(){}
+
+
+   public boolean salvar(){
+    //a parte de processamento aqui no dao pporem organizado e separado
+    return result;
+   }
 }
