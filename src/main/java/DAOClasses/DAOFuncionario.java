@@ -1,6 +1,9 @@
 package DAOClasses;
 
+import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
 
 public class DAOFuncionario {
     /*
@@ -12,10 +15,23 @@ public class DAOFuncionario {
         DAO é crud
         public 
     */
+    private static final String rootPath = CheckPath.getPath();
+    public static void main(String[] args) throws IOException {
+        FileWriter file = new FileWriter(rootPath);
+        file.write("oi");
+        file.close();
+    }
 
+    public boolean readFuncionario(String nomeFuncionario, int CPFfuncionario){
 
-   public boolean salvar(){
     //a parte de processamento aqui no dao pporem organizado e separado
-    return result;
+        return false;
    }
+   public boolean createFuncionario(){
+        return false;
+   }
+
+    public String getRootPath() {
+        return rootPath;
+    }
 }
