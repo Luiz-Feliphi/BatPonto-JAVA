@@ -15,7 +15,7 @@ public class Funcionario {
     private String Cargo;
     private int id_unico;
     //pojo
-    public Funcionario(){}
+    public Funcionario(){}//Constructor
     public Funcionario( String CPF, String Nome, String Nascimento, String Cargo, int id_unico){
         this.CPF = CPF;
         this.Nome = Nome;
