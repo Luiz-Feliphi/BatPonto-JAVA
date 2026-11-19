@@ -4,7 +4,11 @@ public class Local {
     private int id_unico;
     private String endereco;
     private String setor;
-    private Funcionario funcionario;
+    private Funcionario gerente;
+    // Aqui é o gerente do local cada local tem o seu gerente responsavel por ele
+    // com isso é possivel puxar o responsavel do local
+    // e fazer um menu para puxar o responsavel por cada local
+
     public int getId_unico() {
         return id_unico;
     }
@@ -15,10 +19,11 @@ public class Local {
         return setor;
     }
     public Funcionario getFuncionario() {
-        return funcionario;
+        return gerente;
     }
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
+
+    public void setFuncionario(Funcionario gerente) {
+        this.gerente = gerente;
     }
     public void setSetor(String setor) {
         this.setor = setor;
