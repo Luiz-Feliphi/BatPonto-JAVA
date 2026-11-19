@@ -14,6 +14,7 @@ public class Funcionario {
     private String Nascimento;
     private String Cargo;
     private int id_unico;
+    private Local local;
     //pojo
     public Funcionario(){}//Constructor
     public Funcionario( String CPF, String Nome, String Nascimento, String Cargo, int id_unico){
