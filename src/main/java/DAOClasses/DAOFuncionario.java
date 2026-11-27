@@ -2,11 +2,10 @@ package DAOClasses;
 
 import ModelClasses.criaRegistro.Funcionario;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class DAOFuncionario {
     /*
@@ -16,76 +15,52 @@ public class DAOFuncionario {
         exemplo
         DAOFunncionario
         DAO é crud
-        public 
+        public
     */
-    private static final String rootPath = CheckPath.getPath();
 
-//    public static void main(String[] args) throws IOException {
-//        FileWriter file = new FileWriter(rootPath);
-//        file.write("oi");
-//        file.close();
-//    }
-
-    public boolean readFuncionario(String nomeFuncionario, int CPFfuncionario){
-
-    //a parte de processamento aqui no dao pporem organizado e separado
-        return false;
-   }
-   public static void salvarFuncionario(Funcionario funcionario){
-        //Manda para outro arquivo para ele organizar
-       //novamalmente ficaria assim
-
-       /*
-       * ! inicio de bloco
-       * *000.000.000.00*
-       * #Luiz Feliphi Lemos de Souza Lima#
-       * &Cargo do funcionario&
-       * %Nascimento%
-       * !fim de bloco
-       * ! inicio de bloco
-       * $id$
-       * *000.000.000.00*
-       * #Luiz Feliphi Lemos de Souza Lima#
-       * &Cargo do funcionario&
-       * %Nascimento%
-       * !fim de bloco
-       * */
-
-       String linha = formateToFileTest(funcionario);
-       try (BufferedWriter Escrever = new BufferedWriter(new FileWriter(rootPath, true))){
-           Escrever.write(linha);
-           System.out.println(linha);
-           Escrever.newLine();
-       } catch (IOException e) {
-           throw new RuntimeException("Erro ao salvar funcionário no arquivo: " + rootPath, e);
-       }
-   }
-
-    private String formateToFile(Funcionario fun) {
-        return  "$"+fun.getId_unico()+"$"+
-                "*"+fun.getCPF()+"*"+
-                "#"+fun.getNome()+"#"+
-                "&"+fun.getCargo()+"&"+
-                "%"+fun.getNascimento()+"%";
+    // cada funcionario vira um arquivo: TxtDB/funcionarios/{id_unico}.dat
+    private static String caminho(int id_unico){
+        return CheckPath.rootFuncionarios + id_unico + CheckPath.extensao;
     }
 
-    public static void main(String[] args) {
-        salvarFuncionario(new Funcionario("000.000.000.00","Luiz Feliphi Lemos de Souza Lima","08/11/2006", "Programador",1));
-    }
-    //Apenas um metodo test
-    private static String formateToFileTest(Funcionario fun) {
-        return  "$"+1+"$"+
-                "*"+"091.204.361.06"+"*"+
-                "#"+"Luiz Feliphi Lemos de SOuza Lima"+"#"+
-                "&"+"Programador(escravo)"+"&"+
-                "%"+"08/05/2006"+"%";
+    // Create
+    public static boolean createFuncionario(Funcionario funcionario){
+        return Arquivos.gravarObjeto(caminho(funcionario.getId_unico()), funcionario);
     }
 
-    public boolean createFuncionario(){
-        return false;
-   }
+    // Read (um funcionario pelo id). Retorna null se nao existir
+    public static Funcionario readFuncionario(int id_unico){
+        return Arquivos.lerObjeto(caminho(id_unico), Funcionario.class);
+    }
 
-    public String getRootPath() {
-        return rootPath;
+    // Read (todos, ordenados pelo id)
+    public static List<Funcionario> readFuncionarios(){
+        List<Funcionario> funcionarios = new ArrayList<Funcionario>();
+        String[] arquivos = new File(CheckPath.rootFuncionarios).list();
+        if (arquivos == null) {
+            return funcionarios;
+        }
+        for (String arquivo : arquivos) {
+            Funcionario f = Arquivos.lerObjeto(CheckPath.rootFuncionarios + arquivo, Funcionario.class);
+            if (f != null) {
+                funcionarios.add(f);
+            }
+        }
+        funcionarios.sort(Comparator.comparingInt(Funcionario::getId_unico));
+        return funcionarios;
+    }
+
+    // Update (so atualiza quem ja existe)
+    public static boolean updateFuncionario(Funcionario funcionario){
+        if (!new File(caminho(funcionario.getId_unico())).isFile()) {
+            return false;
+        }
+        return Arquivos.gravarObjeto(caminho(funcionario.getId_unico()), funcionario);
+    }
+
+    // Delete
+    public static boolean deleteFuncionario(int id_unico){
+        File arquivo = new File(caminho(id_unico));
+        return arquivo.isFile() && arquivo.delete();
     }
 }

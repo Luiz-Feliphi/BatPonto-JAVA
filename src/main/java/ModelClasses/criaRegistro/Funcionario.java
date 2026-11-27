@@ -1,14 +1,13 @@
 package ModelClasses.criaRegistro;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Random;
+import java.io.Serializable;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
-public class Funcionario {
+public class Funcionario implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private String CPF;
     private String Nome;
     private String Nascimento;
@@ -57,5 +56,32 @@ public class Funcionario {
     }
     public void setCargo(String cargo) {
         Cargo = cargo;
+    }
+
+    public Local getLocal() {
+        return local;
+    }
+    public void setLocal(Local local) {
+        this.local = local;
+    }
+
+    @Override
+    public String toString() {
+        // so mostra o id e o setor do local, porque o Local tambem guarda um Funcionario (o gerente)
+        // e imprimir o objeto inteiro entraria em recursao infinita
+        String infoLocal = (local == null) ? "SEM ID" : local.getId_unico() + " (" + local.getSetor() + ")";
+        try{
+            Thread.sleep(1000);
+        }catch (InterruptedException e){
+            Thread.currentThread().interrupt();
+        }
+        return
+                "----Funcionario--- " +"\n"+
+                "id:" + id_unico +"\n"+
+                "Nome:" + Nome +"\n"+
+                "CPF:" + CPF+"\n"+
+                "Nascimento:" + Nascimento +"\n"+
+                "Cargo:" + Cargo +"\n"+
+                "Local:" + infoLocal;
     }
 }
