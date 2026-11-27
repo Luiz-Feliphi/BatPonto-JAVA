@@ -1,6 +1,10 @@
 package ModelClasses.criaRegistro;
 
-public class Local {
+import java.io.Serializable;
+
+public class Local implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private int id_unico;
     private String endereco;
     private String setor;
@@ -36,5 +40,11 @@ public class Local {
     }
     //pojo
 
-
+    @Override
+    public String toString() {
+        // so mostra o nome do gerente para nao entrar em recursao com o Funcionario
+        String infoGerente = (gerente == null) ? "-" : gerente.getNome();
+        return "Local [id_unico=" + id_unico + ", setor=" + setor + ", endereco=" + endereco
+                + ", gerente=" + infoGerente + "]";
+    }
 }
