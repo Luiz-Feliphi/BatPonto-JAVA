@@ -50,31 +50,38 @@ public class main {
     public static void main(String[] args) {
         CheckPath.inicializer();
         int opcao;
-        do {
-            menuPrincipal();
-            opcao = lerInt("Opção: ");
-            switch (opcao) {
-                case 1: // funcionarios
-                    controllerFuncionario();
-                    break;
-                case 2: // locais
-                    controllerLocal();
-                    break;
-                case 3: // batimento de ponto
-                    controllerPonto();
-                    break;
-                case 4: // resetar ou inicializar a base
-                    if (confirma("Isso apaga TODOS os dados. Continuar? (s/n): ")) {
-                        CheckPath.resetar();
-                    }
-                    break;
-                case 5: // saida
-                    System.out.println("Saindo...");
-                    break;
-                default:
-                    System.out.println("Opção inválida!");
-            }
-        } while (opcao != 5);
+        System.out.print("Escolha a oção de inteface UI(swing) ou CMD (1 ou 2): ");
+        opcao = lerInt("Opção: ");
+       // if (opcao == 1) {
+       //   UI.main(args);
+       // } else 
+        //if (opcao != 2) {        
+            do {
+                menuPrincipal();
+                opcao = lerInt("Opção: ");
+                switch (opcao) {
+                    case 1: // funcionarios
+                        controllerFuncionario();
+                        break;
+                    case 2: // locais
+                        controllerLocal();
+                        break;
+                    case 3: // batimento de ponto
+                        controllerPonto();
+                        break;
+                    case 4: // resetar ou inicializar a base
+                        if (confirma("Isso apaga TODOS os dados. Continuar? (s/n): ")) {
+                            CheckPath.resetar();
+                        }
+                        break;
+                    case 5: // saida
+                        System.out.println("Saindo...");
+                        break;
+                    default:
+                        System.out.println("Opção inválida!");
+                }
+            } while (opcao != 5);
+        //}
     }
 
     // ================================================================ FUNCIONARIOS
