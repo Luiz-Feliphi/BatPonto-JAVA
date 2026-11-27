@@ -1,9 +1,6 @@
 package ModelClasses.criaRegistro;
 
 import java.io.Serializable;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class Funcionario implements Serializable {
     private static final long serialVersionUID = 1L;
